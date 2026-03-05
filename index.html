@@ -5,6 +5,42 @@
   <title>C Street Plaza</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- SEO -->
+  <meta name="description" content="C Street Plaza offers modern, flexible office suites in Vancouver, WA with conference rooms, amenities, and virtual office options starting at $250/month.">
+  <link rel="canonical" href="https://yourdomain.com/">
+
+  <!-- OpenGraph / Social Sharing -->
+  <meta property="og:title" content="C Street Plaza – Professional Office Space in Vancouver WA">
+  <meta property="og:description" content="Modern, flexible office suites with conference rooms, amenities, and virtual options starting at $250/month.">
+  <meta property="og:image" content="https://yourdomain.com/Images/Building-Front.jpg">
+  <meta property="og:url" content="https://yourdomain.com/">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="C Street Plaza – Professional Office Space in Vancouver WA">
+  <meta name="twitter:description" content="Modern, flexible office suites with conference rooms, amenities, and virtual options starting at $250/month.">
+  <meta name="twitter:image" content="https://yourdomain.com/Images/Building-Front.jpg">
+
+  <!-- Local Business Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "OfficeBuilding",
+    "name": "C Street Plaza",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "303 E 16th St",
+      "addressLocality": "Vancouver",
+      "addressRegion": "WA",
+      "postalCode": "98663"
+    },
+    "telephone": "+1-360-608-7187",
+    "image": "https://yourdomain.com/Images/Building-Front.jpg",
+    "url": "https://yourdomain.com/"
+  }
+  </script>
+
   <style>
     :root {
       --primary: #1f4b7a;
@@ -86,10 +122,16 @@
       text-decoration: none;
       margin-left: 1.4rem;
       font-size: 0.95rem;
+      transition: color 0.2s ease;
     }
 
     nav a:hover {
       color: var(--accent);
+    }
+
+    nav a.active {
+      color: var(--accent);
+      font-weight: 600;
     }
 
     /* HERO */
@@ -199,12 +241,6 @@
       border: 1px solid #e3e7ee;
     }
 
-    .feature-card h3 {
-      font-size: 1rem;
-      margin-bottom: 0.4rem;
-      color: var(--dark);
-    }
-
     /* AMENITIES */
     .amenities-list {
       columns: 2;
@@ -275,6 +311,18 @@
       transform: scale(1.03);
     }
 
+    /* SCROLL FADE */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     /* MOBILE */
     @media (max-width: 800px) {
       .two-column {
@@ -315,7 +363,7 @@
 
   <main>
 
-    <section class="hero">
+    <section class="hero fade-in">
       <div class="hero-text">
         <h1>A smart affordable way to office</h1>
         <p>You're great at what you do! Spend more time doing that, and leave the rest to us! Virtual options begin at $250 per month</p>
@@ -331,7 +379,7 @@
       </div>
     </section>
 
-    <section id="about">
+    <section id="about" class="fade-in">
       <h2>About the Building</h2>
 
       <div class="two-column">
@@ -360,7 +408,7 @@
       </div>
     </section>
 
-    <section id="gallery">
+    <section id="gallery" class="fade-in">
       <h2>Photo Gallery</h2>
 
       <div class="photo-grid">
@@ -384,34 +432,9 @@
       <div id="lightbox" class="lightbox">
         <img id="lightbox-img" src="">
       </div>
-
-      <script>
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-
-        document.querySelectorAll('.photo-grid img').forEach(img => {
-          img.addEventListener('click', () => {
-            lightboxImg.src = img.src;
-            lightbox.style.display = 'flex';
-            requestAnimationFrame(() => lightbox.classList.add('show'));
-          });
-        });
-
-        lightbox.addEventListener('click', () => {
-          lightbox.classList.remove('show');
-          setTimeout(() => lightbox.style.display = 'none', 200);
-        });
-
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape') {
-            lightbox.classList.remove('show');
-            setTimeout(() => lightbox.style.display = 'none', 200);
-          }
-        });
-      </script>
     </section>
 
-    <section id="amenities">
+    <section id="amenities" class="fade-in">
       <h2>C-Street Plaza Amenities</h2>
 
       <ul class="amenities-list">
@@ -430,7 +453,7 @@
       </ul>
     </section>
 
-    <section id="location">
+    <section id="location" class="fade-in">
       <h2>Location</h2>
 
       <div class="two-column">
@@ -481,12 +504,24 @@
     <div><a href="#top">Back to top</a></div>
   </footer>
 
+  <!-- SCRIPTS -->
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 
-</body>
-</html>
+  <!-- Lightbox -->
+  <script>
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
 
+    document.querySelectorAll('.photo-grid img').forEach(img => {
+      img.addEventListener('click', () => {
+        lightboxImg.src = img.src;
+        lightbox.style.display = 'flex';
+        requestAnimationFrame(() => lightbox.classList.add('show'));
+      });
+    });
 
+    lightbox.addEventListener('click', () => {
+      lightbox.classList.remove('
 
