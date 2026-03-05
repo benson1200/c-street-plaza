@@ -523,5 +523,30 @@
     });
 
     lightbox.addEventListener('click', () => {
-      lightbox.classList.remove('
+      lightbox.classList.remove('show');
+      setTimeout(() => {
+        lightbox.style.display = 'none';
+      }, 250);
+    });
+  </script>
+
+  <!-- Scroll Fade-In -->
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
+
+
+
+
 
