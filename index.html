@@ -290,8 +290,341 @@
   border: 1px solid #e3e7ee;
 }
   </style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>C Street Plaza</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --primary: #1f4b7a;
+      --accent: #f4b41a;
+      --light: #f5f7fa;
+      --dark: #1b2430;
+      --text: #333;
+    }
+
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #ffffff;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), #0b2744);
+      color: #fff;
+      padding: 1.2rem 8%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 2.6rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      font-family: "Playfair Display", serif;
+      color: #ffffff;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 1.4rem;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 3rem 8%;
+      background: var(--light);
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .hero-text {
+      flex: 1 1 280px;
+    }
+
+    .hero-text h1 {
+      font-size: 2.4rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    .hero-text p {
+      margin-bottom: 1.5rem;
+      max-width: 32rem;
+    }
+
+    .cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.7rem 1.4rem;
+      border-radius: 999px;
+      border: 2px solid var(--primary);
+      font-size: 0.95rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #16375a;
+      border-color: #16375a;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+    }
+
+    .btn-outline:hover {
+      background: #e1e7f0;
+    }
+
+    .hero-image {
+      flex: 1 1 260px;
+      min-height: 220px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #dfe7f3, #c1d4ea);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-weight: 600;
+      text-align: center;
+      padding: 1.5rem;
+    }
+
+    section {
+      padding: 3rem 8%;
+    }
+
+    section h2 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.5fr);
+      gap: 2rem;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .feature-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+      border: 1px solid #e3e7ee;
+    }
+
+    .feature-card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+      color: var(--dark);
+    }
+
+    .availability-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .availability-table th,
+    .availability-table td {
+      border: 1px solid #e0e4ec;
+      padding: 0.6rem 0.5rem;
+      text-align: left;
+    }
+
+    .availability-table th {
+      background: #f0f3f9;
+      font-weight: 600;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+    }
+
+    .badge-available {
+      background: #e3f7e8;
+      color: #1f7a3b;
+    }
+
+    .badge-leased {
+      background: #f7e3e3;
+      color: #a12b2b;
+    }
+
+    .amenities-list {
+      columns: 2;
+      column-gap: 2rem;
+      margin-top: 0.5rem;
+    }
+
+    .amenities-list li {
+      margin-bottom: 0.3rem;
+    }
+
+    .contact-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      border: 1px solid #e3e7ee;
+      max-width: 420px;
+    }
+
+    .contact-card label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+      color: var(--dark);
+    }
+
+    .contact-card input,
+    .contact-card textarea {
+      width: 100%;
+      padding: 0.5rem 0.6rem;
+      border-radius: 6px;
+      border: 1px solid #ccd2dd;
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .contact-card textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .contact-meta {
+      font-size: 0.9rem;
+      margin-top: 0.75rem;
+      color: #555;
+    }
+
+    footer {
+      background: #0f1b2a;
+      color: #cfd6e3;
+      padding: 1.5rem 8%;
+      font-size: 0.85rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    footer a {
+      color: #cfd6e3;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 800px) {
+      .two-column {
+        grid-template-columns: 1fr;
+      }
+
+      .amenities-list {
+        columns: 1;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+
+      header nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .photo-grid img {
+      width: 100%;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+      border: 1px solid #e3e7ee;
+    }
+  </style>
 </head>
+
 <body>
+
   <header>
     <div class="logo">C Street Plaza</div>
     <nav>
@@ -299,98 +632,99 @@
       <a href="#amenities">Amenities</a>
       <a href="#location">Location</a>
       <a href="#contact">Contact</a>
+      <a href="#gallery">Photo Gallery</a>
     </nav>
   </header>
 
   <main>
+
     <section class="hero">
       <div class="hero-text">
-	  
-	    <h1>A smart affordable way to office</h1>
-        <p>
-          You're great at what you do! Spend more time doing that, and leave the rest to us! Virtual options begin at $250 per month
-        </p>
+        <h1>A smart affordable way to office</h1>
+        <p>You're great at what you do! Spend more time doing that, and leave the rest to us! Virtual options begin at $250 per month</p>
+
         <div class="cta-group">
-          <a href="#availability" class="btn btn-primary">Photo Gallery</a>
+          <a href="#gallery" class="btn btn-primary">Photo Gallery</a>
           <a href="#contact" class="btn btn-outline">Virtual Tour</a>
         </div>
       </div>
-<div class="hero-image">
-  <img src="Images/1.jpg" alt="Building Lobby" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
-</div>
 
-
-</div>
+      <div class="hero-image">
+        <img src="Images/1.jpg" alt="Building Lobby" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+      </div>
     </section>
 
-<section id="about">
-  <h2>About the Building</h2>
-  <div class="two-column">
-    <div>
-      <p>
-        C Street Plaza is a modern, light‑filled professional building designed to support growing businesses with flexible, turnkey office solutions. Large windows, updated finishes, and thoughtfully planned common areas create a welcoming environment for both staff and clients. Tenants enjoy access to two shared conference rooms, affordable printing and copying services, free scanning, a fully equipped break room, and on‑site janitorial support—all included to simplify your operations and reduce overhead.
-      </p>
+    <section id="about">
+      <h2>About the Building</h2>
 
-      <div class="features">
-        <div class="feature-card">
-          <h3>Flexible Layouts</h3>
-          <p>Suites from 500–1,000 sq ft, configurable for private offices, open plans, or hybrid setups.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Professional Image</h3>
-          <p>Modern lobby, directory signage, and shared conference space for client meetings.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Easy Access</h3>
-          <p>Close to major routes, transit, and walkable amenities for staff and visitors.</p>
+      <div class="two-column">
+        <div>
+          <p>
+            C Street Plaza is a modern, light‑filled professional building designed to support growing businesses with flexible, turnkey office solutions. Large windows, updated finishes, and thoughtfully planned common areas create a welcoming environment for both staff and clients. Tenants enjoy access to two shared conference rooms, affordable printing and copying services, free scanning, a fully equipped break room, and on‑site janitorial support—all included to simplify your operations and reduce overhead.
+          </p>
+
+          <div class="features">
+            <div class="feature-card">
+              <h3>Flexible Layouts</h3>
+              <p>Suites from 500–1,000 sq ft, configurable for private offices, open plans, or hybrid setups.</p>
+            </div>
+
+            <div class="feature-card">
+              <h3>Professional Image</h3>
+              <p>Modern lobby, directory signage, and shared conference space for client meetings.</p>
+            </div>
+
+            <div class="feature-card">
+              <h3>Easy Access</h3>
+              <p>Close to major routes, transit, and walkable amenities for staff and visitors.</p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-    <section id="Photo Gallery">
+    <section id="gallery">
       <h2>Photo Gallery</h2>
 
-  <div class="photo-grid">
-    <img src="Images/1.jpg" alt="Photo 1">
-    <img src="Images/2.jpg" alt="Photo 2">
-    <img src="Images/3.jpg" alt="Photo 3">
-    <img src="Images/4.jpg" alt="Photo 4">
+      <div class="photo-grid">
+        <img src="Images/1.jpg" alt="Photo 1">
+        <img src="Images/2.jpg" alt="Photo 2">
+        <img src="Images/3.jpg" alt="Photo 3">
+        <img src="Images/4.jpg" alt="Photo 4">
+        <img src="Images/6.jpg" alt="Photo 6">
+        <img src="Images/7.jpg" alt="Photo 7">
+        <img src="Images/8.jpg" alt="Photo 8">
+        <img src="Images/9.jpg" alt="Photo 9">
+        <img src="Images/10.jpg" alt="Photo 10">
+        <img src="Images/11.jpg" alt="Photo 11">
+        <img src="Images/12.jpg" alt="Photo 12">
+        <img src="Images/13.jpg" alt="Photo 13">
+        <img src="Images/14.jpg" alt="Photo 14">
+        <img src="Images/15.jpg" alt="Photo 15">
+        <img src="Images/Building-Front.jpg" alt="Building Front">
+      </div>
 
-    <img src="Images/6.jpg" alt="Photo 6">
-    <img src="Images/7.jpg" alt="Photo 7">
-    <img src="Images/8.jpg" alt="Photo 8">
-    <img src="Images/9.jpg" alt="Photo 9">
-    <img src="Images/10.jpg" alt="Photo 10">
-    <img src="Images/11.jpg" alt="Photo 11">
-    <img src="Images/12.jpg" alt="Photo 12">
-    <img src="Images/13.jpg" alt="Photo 13">
-    <img src="Images/14.jpg" alt="Photo 14">
-    <img src="Images/15.jpg" alt="Photo 15">
-	<img src="Images/Building-Front.jpg" alt="Building Front">  
-  </div>
+      <div id="lightbox" class="lightbox">
+        <img id="lightbox-img" src="">
+      </div>
 
-<div id="lightbox" class="lightbox">
-  <img id="lightbox-img" src="">
-</div>
+      <script>
+        document.querySelectorAll('.photo-grid img').forEach(img => {
+          img.addEventListener('click', () => {
+            document.getElementById('lightbox-img').src = img.src;
+            document.getElementById('lightbox').style.display = 'flex';
+          });
+        });
 
-<script>
-document.querySelectorAll('.photo-grid img').forEach(img => {
-  img.addEventListener('click', () => {
-    document.getElementById('lightbox-img').src = img.src;
-    document.getElementById('lightbox').style.display = 'flex';
-  });
-});
+        document.getElementById('lightbox').addEventListener('click', () => {
+          document.getElementById('lightbox').style.display = 'none';
+        });
+      </script>
+    </section>
 
-document.getElementById('lightbox').addEventListener('click', () => {
-  document.getElementById('lightbox').style.display = 'none';
-});
-</script>
-
-</section>
     <section id="amenities">
-      <h2>C-Steet Plaza Amenities</h2>
+      <h2>C-Street Plaza Amenities</h2>
+
       <ul class="amenities-list">
         <li>Secure, affordable Internet</li>
         <li>24/7 key‑fob access</li>
@@ -399,64 +733,53 @@ document.getElementById('lightbox').addEventListener('click', () => {
         <li>Tenant parking lot</li>
         <li>Large break room</li>
         <li>Attractive lobby and front desk</li>
-        <li>Walkable to all downtown Vancouver ammenities</li>
-		<li>Security system</li>  
-		<li>Professional landscape and janitorial teams</li>
-	  	<li>Shared copiers with free scanning</li>
-		<li>On-site storage space</li>
-	  </ul>
+        <li>Walkable to all downtown Vancouver amenities</li>
+        <li>Security system</li>
+        <li>Professional landscape and janitorial teams</li>
+        <li>Shared copiers with free scanning</li>
+        <li>On-site storage space</li>
+      </ul>
     </section>
 
-<section id="location">
-  <h2>Location</h2>
+    <section id="location">
+      <h2>Location</h2>
 
-  <div class="two-column">
-    <!-- LEFT COLUMN: Address + Contact -->
-    <div>
-      <p><strong>Address:</strong><br>
-        303 E 16th St<br>
-        Vancouver, WA 98663
-      </p>
-
-      <p>
-        Conveniently located near major freeways.
-      </p>
-
-      <!-- CONTACT SECTION MOVED HERE -->
-      <section id="contact" style="margin-top: 2rem;">
-        <h2>Contact & Tours</h2>
-
-        <div class="contact-card">
-          <p style="font-size:0.95rem; color:#444;">
-            For inquiries or to schedule a tour, please contact us directly using the information below.
+      <div class="two-column">
+        <div>
+          <p><strong>Address:</strong><br>
+            303 E 16th St<br>
+            Vancouver, WA 98663
           </p>
 
-          <div class="contact-meta" style="margin-top: 0.75rem;">
-            <strong>Email:</strong> Sparrowwrenlaw@gmail.com<br>
-            <strong>Phone:</strong> (360) 608‑7187
-          </div>
+          <p>Conveniently located near major freeways.</p>
+
+          <section id="contact" style="margin-top: 2rem;">
+            <h2>Contact & Tours</h2>
+
+            <div class="contact-card">
+              <p style="font-size:0.95rem; color:#444;">
+                For inquiries or to schedule a tour, please contact us directly using the information below.
+              </p>
+
+              <div class="contact-meta" style="margin-top: 0.75rem;">
+                <strong>Email:</strong> Sparrowwrenlaw@gmail.com<br>
+                <strong>Phone:</strong> (360) 608‑7187
+              </div>
+            </div>
+          </section>
         </div>
-      </section>
-    </div>
 
-    <!-- RIGHT COLUMN: MAP -->
-    <div>
-      <div class="hero-image" style="min-height: 200px;">
-        <iframe
-          width="600"
-          height="450"
-          style="border:0"
-          loading="lazy"
-          allowfullscreen
-          referrerpolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps?q=303+E+16th+St,+Vancouver,+WA+98663&output=embed">
-        </iframe>
-      </div>
-    </div>
-  </div>
-</section>
-
-
+        <div>
+          <div class="hero-image" style="min-height: 200px;">
+            <iframe
+              width="600"
+              height="450"
+              style="border:0"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps?q=303+E+16th+St,+Vancouver,+WA+98663&output=embed">
+            </iframe>
           </div>
         </div>
       </div>
@@ -472,33 +795,7 @@ document.getElementById('lightbox').addEventListener('click', () => {
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
